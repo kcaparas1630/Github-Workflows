@@ -46,8 +46,11 @@ jobs:
             -t ${{ inputs.registry_path }}/${{ inputs.image_name }}:latest \
             .
             
-      - name: Tag with SHA if enabled
-        if: ${{ inputs.tag_with_sha }} |
-        run: docker tag ${{ inputs.registry_path }}/${{ inputs.image_name }}:latest ${{ inputs.registry_path }}/${{ inputs.image_name }}:${{ github.sha }}
-        
-        
+      - name: Push Docker image (latest)
+        run: docker push ${{ inputs.registry_path }}/${{ inputs.image_name }}:latest
+      
+      - name: Tag and push with SHA
+        if: ${{ inputs.tag_with_sha }}
+        run: |
+          docker tag ${{ inputs.registry_path }}/${{ inputs.image_name }}:latest ${{ inputs.registry_path }}/${{ inputs.image_name }}:${{ github.sha }}
+          docker push ${{ inputs.registry_path }}/${{ inputs.image_name }}:${{ github.sha }}
