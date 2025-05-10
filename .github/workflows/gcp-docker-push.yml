@@ -2,24 +2,12 @@ name: GCP Docker Build
 on:
   workflow_call:
     inputs:
-        dockerfile_path:
-          required: false
-          default: 'Dockerfile'
-          type: string
-        build_args:
-          required: false
-          default: ''
-          type: string
         image_name:
           required: true
           type: string
         registry_path:
           required: true
           type: string
-        tag_with_sha:
-          required: false
-          default: true
-          type: boolean
 jobs:
   build:
     runs-on: ubuntu-latest
