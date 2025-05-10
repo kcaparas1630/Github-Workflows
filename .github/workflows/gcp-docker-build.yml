@@ -27,7 +27,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
       
-      - name: Authentication Setup:
+      - name: Authentication Setup
         uses: ./.github/workflows/gcp-auth-and-docker.yml@main
         with:
           GCP_SERVICE_ACCOUNT_KEY: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
