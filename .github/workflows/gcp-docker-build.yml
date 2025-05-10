@@ -2,24 +2,29 @@ name: GCP Docker Build
 on:
   workflow_call:
     inputs:
-        dockerfile_path:
-          required: false
-          default: 'Dockerfile'
-          type: string
-        build_args:
-          required: false
-          default: ''
-          type: string
-        image_name:
-          required: true
-          type: string
-        registry_path:
-          required: true
-          type: string
-        tag_with_sha:
-          required: false
-          default: true
-          type: boolean
+      dockerfile_path:
+        required: false
+        default: 'Dockerfile'
+        type: string
+      build_args:
+        required: false
+        default: ''
+        type: string
+      image_name:
+        required: true
+        type: string
+      registry_path:
+        required: true
+        type: string
+      tag_with_sha:
+        required: false
+        default: true
+        type: boolean
+    secrets:
+      GCP_SERVICE_ACCOUNT_KEY:
+        required: true
+      GCP_PROJECT_ID:
+        required: true
 jobs:
   auth:
     uses: kcaparas1630/Github-Workflows/.github/workflows/gcp-auth-and-docker.yml@main
