@@ -42,7 +42,7 @@ jobs:
       - name: Build Docker Image
         run: |
           docker build -f ${{ inputs.dockerfile_path }} \
-            --build-arg ${{ inputs.build_args }} \
+            ${{ inputs.build_args != '' && format('--build-arg {0}', inputs.build_args) || '' }} \
             -t ${{ inputs.registry_path }}/${{ inputs.image_name }}:latest \
             .
             
