@@ -50,6 +50,9 @@ jobs:
             ${{ inputs.build_args != '' && format('--build-arg {0}', inputs.build_args) || '' }} \
             -t ${{ inputs.registry_path }}/${{ inputs.image_name }}:latest \
             .
+
+      - name: Gclout init
+        run: gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin https://us-east1-docker.pkg.dev
             
       - name: Push Docker image (latest)
         run: docker push ${{ inputs.registry_path }}/${{ inputs.image_name }}:latest
