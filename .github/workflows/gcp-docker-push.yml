@@ -1,0 +1,41 @@
+name: GCP Docker Build
+on:
+  workflow_call:
+    inputs:
+        dockerfile_path:
+          required: false
+          default: 'Dockerfile'
+          type: string
+        build_args:
+          required: false
+          default: ''
+          type: string
+        image_name:
+          required: true
+          type: string
+        registry_path:
+          required: true
+          type: string
+        tag_with_sha:
+          required: false
+          default: true
+          type: boolean
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Authentication Setup:
+        uses: ./.github/workflows/gcp-auth-and-docker.yml@main
+        with:
+          GCP_SERVICE_ACCOUNT_KEY: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
+          GCP_PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
+      
+      - name: Push Docker Image
+        run: |
+          docker push ${{ inputs.registry_path }}/${{ inputs.image_name }}:latest
+            
+        
+        
